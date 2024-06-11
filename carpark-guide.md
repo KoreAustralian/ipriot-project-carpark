@@ -203,7 +203,7 @@ You realize that you need a way to configure the car park system. You decide to 
 --------
 **Evidencing:**
 Ensure that you have completed the previous steps and created the appropriate tags. Confirm that the tags have been created by running `git tag` in the terminal and provide a screenshot of the output.
-
+![img_2.png](img_2.png)
 ```bash
 [student@workstation ipriot-car-park-prj]$ git tag
 s1
@@ -441,7 +441,7 @@ This time, we will push the tag to the remote repository:
    ```
 
 Add a screenshot of the GitHub repository after pushing the tag, showing the CarPark class with the new methods:
-
+![img_4.png](img_4.png)
 ```markdown
 ![Added methods to the car park class](images/methods-to-car-park.png)
 ```
@@ -451,17 +451,18 @@ Answer the following questions:
 >
 > 1. **Which class is responsible for each of the following pieces of information (and why)?**
 >    - _The number of available bays_  
->      `Answer here...`
+>      `class Car park: because The number of available bays is determined by the capacity of Car park and the number of car's number plates currently in car park`
 >    - _The current temperature_  
->      `Answer here...`
+>      `class car park: The Car park class updates display with the current temperature`
 >    - _The time_  
->      `Answer here...`
+>      `class display: When a car enters or leaves car park, displays with current time.`
 >
 > 2. **What is the difference between an attribute and a property?**  
->    `Answer here...`
+>    `attributes are simply data members of an object, while property is methods that are accessed like attributes but actually perform some computation when called.`
 >
 > 3. **Why do you think we used a dictionary to hold the data we passed the display? List at least one advantage and one disadvantage of this approach.**  
->    `Answer here...`
+>    `Advantage: Dictionaries make it easy to map keys to values, making your data structure readable. Disadvantage: As the size of the dictionary grows, insertion and deletion operations can become slower`
+>    
 
 #### Add a detect vehicle method to the Sensor class
 
@@ -704,7 +705,8 @@ if __name__ == "__main__":
 **Evidencing:**
 
 1. Add a screenshot of the output of the unit tests. If any failed, add a screenshot of the error message and a screenshot after you have fixed the errors:
-
+![img_5.png](img_5.png)
+![img_6.png](img_6.png)
    ```markdown
    ![Unit tests](images/unit-tests.png)
    ```
@@ -763,7 +765,8 @@ Next, we'll create tests for the `Display` class. These tests will test the `__i
 **Evidencing:**
 
 1. Add a screenshot of the output of the unit tests. If any failed, add a screenshot of the error message and a screenshot after you have fixed the errors:
-
+![img_7.png](img_7.png)
+![img_8.png](img_8.png)
    ```markdown
    ![Unit tests](images/unit-tests-display.png)
    ```

@@ -5,7 +5,7 @@ from car_park import CarPark
 
 class TestDisplay(unittest.TestCase):
     def setUp(self):
-        self.car_park = CarPark(location="Moondalup", capacity=100)
+        self.car_park = CarPark(location="Test Location", capacity=100)
         self.display = Display(id=1, message="Welcome to the car park", is_on=True, car_park=self.car_park)
 
     def test_display_initialized_with_all_attributes(self):

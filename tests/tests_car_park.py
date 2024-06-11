@@ -1,16 +1,20 @@
 import unittest
 from pathlib import Path
 from car_park import CarPark
+import json
 
 
 class TestCarPark(unittest.TestCase):
     log_file_name = "new_log.txt"
+    config_file_name = "config.json"
 
     def setUp(self):
-        self.car_park = CarPark("123 Example Street", 100, log_file=self.log_file_name)
+        self.car_park = CarPark("123 Example Street", 100, log_file=self.log_file_name,
+                                config_file=self.config_file_name)
 
     def tearDown(self):
         Path(self.log_file_name).unlink(missing_ok=True)
+        Path(self.config_file_name).unlink(missing_ok=True)
 
     def test_car_park_initialized_with_all_attributes(self):
         self.assertIsInstance(self.car_park, CarPark)
@@ -77,6 +81,23 @@ class TestCarPark(unittest.TestCase):
         self.assertIn("NEW-001", last_line)  # check plate entered
         self.assertIn("exited", last_line)  # check description
         self.assertIn("\n", last_line)  # check entry has a new line
+
+    def test_write_config(self):
+        self.car_park.write_config()
+        self.assertTrue(Path(self.config_file_name).exists())
+        with Path(self.config_file_name).open() as f:
+            config = json.load(f)
+        self.assertEqual(config["location"], "123 Example Street")
+        self.assertEqual(config["capacity"], 100)
+        self.assertEqual(config["log_file"], self.log_file_name)
+
+    def test_from_config(self):
+        self.car_park.write_config()
+        new_car_park = CarPark.from_config(self.config_file_name)
+        self.assertIsInstance(new_car_park, CarPark)
+        self.assertEqual(new_car_park.location, "123 Example Street")
+        self.assertEqual(new_car_park.capacity, 100)
+        self.assertEqual(new_car_park.log_file, Path(self.log_file_name))
 
 
 if __name__ == "__main__":

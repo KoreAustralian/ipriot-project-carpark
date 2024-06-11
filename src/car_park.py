@@ -4,12 +4,12 @@ from display import Display
 
 class CarPark:
     def __init__(self,
-                 lacation,
+                 location,
                  capacity,
                  plates = None,
                  sensors = None,
                  displays = None):
-        self.lacation = lacation
+        self.location = location
         self.capacity = capacity
         self.plates = plates or []
         self.sensors = sensors or []
@@ -18,10 +18,10 @@ class CarPark:
     @property
     def available_bays(self):
         # car_park.available_bays
-        return self.capacity - len(self.plates)
+        return max(0, self.capacity - len(self.plates))
 
     def __str__(self):
-        return f'Welcome to {self.lacation} car park'
+        return f'Welcome to {self.location} car park'
 
     def register(self, component):
         """Registers components of a car park"""

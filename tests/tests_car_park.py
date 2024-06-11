@@ -1,6 +1,6 @@
 import unittest
-from car_park import CarPark
 from pathlib import Path
+from car_park import CarPark
 
 
 class TestCarPark(unittest.TestCase):
@@ -8,6 +8,9 @@ class TestCarPark(unittest.TestCase):
 
     def setUp(self):
         self.car_park = CarPark("123 Example Street", 100, log_file=self.log_file_name)
+
+    def tearDown(self):
+        Path(self.log_file_name).unlink(missing_ok=True)
 
     def test_car_park_initialized_with_all_attributes(self):
         self.assertIsInstance(self.car_park, CarPark)
@@ -17,7 +20,7 @@ class TestCarPark(unittest.TestCase):
         self.assertEqual(self.car_park.sensors, [])
         self.assertEqual(self.car_park.displays, [])
         self.assertEqual(self.car_park.available_bays, 100)
-        self.assertEqual(self.car_park.log_file, Path("log.txt"))
+        self.assertEqual(self.car_park.log_file, Path(self.log_file_name))
 
     def test_add_car(self):
         self.car_park.add_car("FAKE-001")
@@ -74,9 +77,6 @@ class TestCarPark(unittest.TestCase):
         self.assertIn("NEW-001", last_line)  # check plate entered
         self.assertIn("exited", last_line)  # check description
         self.assertIn("\n", last_line)  # check entry has a new line
-
-    def tearDown(self):
-        Path(self.log_file_name).unlink(missing_ok=True)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 from sensor import Sensor
 from display import Display
+from pathlib import Path
 
 
 class CarPark:
@@ -8,12 +9,14 @@ class CarPark:
                  capacity,
                  plates=None,
                  sensors=None,
-                 displays=None):
+                 displays=None,
+                 log_file=None):
         self.location = location
         self.capacity = capacity
         self.plates = plates or []
         self.sensors = sensors or []
         self.displays = displays or []
+        self.log_file = Path(log_file) if log_file else Path("log.txt")
 
     @property
     def available_bays(self):
@@ -35,9 +38,11 @@ class CarPark:
 
     def add_car(self, plate):
         self.plates.append(plate)
+        self.write_log(f"Car added: {plate}")
 
     def remove_car(self, plate):
         self.plates.remove(plate)
+        self.write_log(f"Car removed: {plate}")
 
     def update_displays(self):
         for display in self.displays:
@@ -45,4 +50,6 @@ class CarPark:
                             "Temperature": 42})
             print(f"Updating: {display}")
 
-
+    def write_log(self, event):
+        with self.log_file.open("a") as log:
+            log.write(event + "\n")

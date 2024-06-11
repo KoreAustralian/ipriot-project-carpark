@@ -1,10 +1,13 @@
 import unittest
 from car_park import CarPark
+from pathlib import Path
 
 
 class TestCarPark(unittest.TestCase):
+    log_file_name = "new_log.txt"
+
     def setUp(self):
-        self.car_park = CarPark("123 Example Street", 100)
+        self.car_park = CarPark("123 Example Street", 100, log_file=self.log_file_name)
 
     def test_car_park_initialized_with_all_attributes(self):
         self.assertIsInstance(self.car_park, CarPark)
@@ -14,6 +17,7 @@ class TestCarPark(unittest.TestCase):
         self.assertEqual(self.car_park.sensors, [])
         self.assertEqual(self.car_park.displays, [])
         self.assertEqual(self.car_park.available_bays, 100)
+        self.assertEqual(self.car_park.log_file, Path("log.txt"))
 
     def test_add_car(self):
         self.car_park.add_car("FAKE-001")
@@ -45,6 +49,34 @@ class TestCarPark(unittest.TestCase):
     def test_register_raises_type_error(self):
         with self.assertRaises(TypeError):
             self.car_park.register("Not a Sensor or Display")
+
+    def test_log_file_created(self):
+        new_carpark = CarPark("123 Example Street", 100, log_file=self.log_file_name)
+        new_carpark.add_car("FAKE-001")
+        new_carpark.remove_car("FAKE-001")
+        self.assertTrue(Path(self.log_file_name).exists())
+
+    def test_car_logged_when_entering(self):
+        new_carpark = CarPark("123 Example Street", 100, log_file=self.log_file_name)
+        new_carpark.add_car("NEW-001")
+        with new_carpark.log_file.open() as f:
+            last_line = f.readlines()[-1]
+        self.assertIn("NEW-001", last_line)  # check plate entered
+        self.assertIn("entered", last_line)  # check description
+        self.assertIn("\n", last_line)  # check entry has a new line
+
+    def test_car_logged_when_exiting(self):
+        new_carpark = CarPark("123 Example Street", 100, log_file=self.log_file_name)
+        new_carpark.add_car("NEW-001")
+        new_carpark.remove_car("NEW-001")
+        with new_carpark.log_file.open() as f:
+            last_line = f.readlines()[-1]
+        self.assertIn("NEW-001", last_line)  # check plate entered
+        self.assertIn("exited", last_line)  # check description
+        self.assertIn("\n", last_line)  # check entry has a new line
+
+    def tearDown(self):
+        Path(self.log_file_name).unlink(missing_ok=True)
 
 
 if __name__ == "__main__":

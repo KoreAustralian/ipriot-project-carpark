@@ -5,7 +5,7 @@ from car_park import CarPark
 
 class TestEntrySensor(unittest.TestCase):
     def setUp(self):
-        self.car_park = CarPark(location="Test Location", capacity=100)
+        self.car_park = CarPark(location="Moondalup", capacity=100)
         self.entry_sensor = EntrySensor(id=1, car_park=self.car_park, is_active=True)
 
     def test_entry_sensor_initialization(self):

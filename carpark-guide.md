@@ -70,11 +70,11 @@ Include a screenshot of your GitHub repository **after** you have pushed your in
 
 After reading the task requirements, you should be able to identify the classes, methods, and attributes required for the car park system. Complete the following table with the classes, methods, and attributes you must implement.
 
-| Class Name | Attributes                          | Methods                         |
-| ---------- |-------------------------------------|---------------------------------|
-| `CarPark`    | total_parking<br/>available_parking | park_car<br/>unpark_car         |
-| `Sensor`     | car_number<br/>status               | update_number<br/>update_status |
-| `Display`    | message<br/>display                 |  display_available_spaces<br/>update_message                               |
+| Class Name | Attributes             | Methods                        |
+| ---------- |------------------------|--------------------------------|
+| `CarPark`    | location<br/>capacity  | register<br/>add_car           |
+| `Sensor`     | car_park<br/>is_active | scan_plate<br/>update_car_park |
+| `Display`    | id <br/>message        | update<br/>__str__             |
 
 **Evidencing:**
 Ensure you have completed the previous table and include at least two methods and attributes for each.
@@ -367,11 +367,14 @@ You may want to see the number of available bays, the current temperature, and t
 Now consider, between the `CarPark`, `Sensor`, and `Display` classes, which class is responsible for each piece of information? There's no right or wrong answer here. But you should be able to justify your answer.
 
 >Q. Which class is responsible for the number of available bays (and why)?
->
+> Class Car_park: In the CarPark class, it has an attribute capacity that defines the total number of parking bays available.
+> 
 >Q. Which class is responsible for the current temperature (and why)?
->
+>carpark class: Because Car_park class has Update_displays method to display temperature.
+> 
 >Q. Which class is responsible for the time (and why)?
->
+>Car_park class: It has log_car_activity method to append a timestamped log entry to the log file whenever a vehicle enters or exits.
+> 
 --------
 
 ##### Detour: implement available bays
@@ -1088,7 +1091,8 @@ In your final submission, you must include any files you created or modified. Th
    ```
 
 4. Release your code on GitHub. You can do this by going to the releases section and selecting "Create a new release". Give the release a title ("Project Submission") and description. Then click "Publish release". Include a screenshot of the release:
-
+![img_14.png](img_14.png)
+![img_15.png](img_15.png)
    ```markdown
    ![Create a release](images/create-release.png)
 
